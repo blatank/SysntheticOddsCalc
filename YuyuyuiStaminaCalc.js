@@ -2,69 +2,68 @@
     'use strict';
 
     // 定数
-    const maxStaminaEdit = document.getElementById('maxStamina');
+    const oddsEdit = document.getElementById('odds');
     const calcResult = document.getElementById('calcResult');
-    const cookieName = "CalYuyuiStamina";
-    const recoverPerMin = 5;                // 5分で1回復する
-    const cookieLife = 60 * 60 * 24 * 20;   // 20日(Sec*Min*Hour*Day)
-
+    const calcAlloc = document.getElementById('calcAlloc');
+    const calcBtn = document.getElementById('calcBtn');
+    const fundEdit = document.getElementById('fundEdit');
 
     // 読み込み時の処理
-    const regex = RegExp(`(?:(?:^|.*;\s*)${cookieName}\s*\=\s*([^;]*).*$)|^.*$`);
-    const cookieValue = document.cookie.replace(regex, "$1");
+    // const regex = RegExp(`(?:(?:^|.*;\s*)${cookieName}\s*\=\s*([^;]*).*$)|^.*$`);
+    // const cookieValue = document.cookie.replace(regex, "$1");
 
     // cookieがあるなら表示する
-    if (cookieValue.length > 0) {
-        maxStaminaEdit.value = cookieValue;
-        calcStamina();    
-    }
-    else {
-        ;
-    }
+    // if (cookieValue.length > 0) {
+    //     maxStaminaEdit.value = cookieValue;
+    //     calcStamina();    
+    // }
+    // else {
+    //     ;
+    // }
 
     /**
      * 計算したスタミナを出力する
      */
-    function calcStamina() {
-        const recoverPerHour = 60 / recoverPerMin;      // 1時間の回復量
-        const maxStamina = parseInt(maxStaminaEdit.value);
-        
-        calcResult.innerText = "";
-        for (let i = 1; i <= 24; i++) {
-            const targetStamina = maxStamina - recoverPerHour * i;
-            if (targetStamina > 0) {
-                let p = document.createElement('p');
-                p.classList.add('result');
-                p.innerHTML = `${i}時間放置するとしたら、${targetStamina}以下に減らしておいてください。`;
-                calcResult.appendChild(p);
-            }
-            else {
-                break;
-            }
+    function calSysOdds() {
+        // オッズ取得
+        const oddsStr = oddsEdit.value;
+
+        // 改行単位で分割
+        const oddsArray = oddsStr.split('\n');
+        let odds = [];
+        let denomi = 0.0;   // 分母
+
+        // もうちょっとカッコイイ書き方があるが、とりあえずこれ
+        for (let i=0; i<oddsArray.length; i++) {
+            odds[i] = parseFloat(oddsArray[i]);
+            denomi += 1.0 / odds[i];
         }
 
-        // スタミナ回復量を計算
-        // まずはMAX / 1時間の回復量で何時間かかるか
-        const hour = Math.floor(maxStamina / recoverPerHour);
-        // 残り分を出す
-        const min = (maxStamina - recoverPerHour * hour) * recoverPerMin;
+        let sysOdds = 1.0 / denomi;
+        calcResult.innerHTML = `合成オッズは<strong>${sysOdds}</strong>です。`;
 
-        // HTML出力
-        const p = document.createElement('p');
-        p.innerHTML = `全開するまでに、<strong class="recover">${hour}時間 ${min}分</strong>掛かります。`;
-        calcResult.appendChild(p);
+        // 資金取得
+        let fund = parseInt(fundEdit.value);
+
+        let allocFunds = [];
+        let returns = [];
+        let sysReturn = fund * sysOdds;
+        let totalFund = 0;
+
+        for (let i=0; i<oddsArray.length; i++) {
+            allocFunds[i] = Math.ceil(sysReturn / odds[i] / 100.0) * 100;
+            totalFund += allocFunds[i];
+            returns[i] = Math.floor(allocFunds[i] * odds[i]);
+            calcAlloc.innerHTML += `${odds[i]}倍のオッズに<strong class="text-info">${allocFunds[i]}円</strong>購入ください。払い戻しは${returns[i]}円になります。<br>`
+        }
+        calcAlloc.innerHTML += `合成オッズを考慮した結果、資金は<strong class="text-primary">${totalFund}円</strong>必要です。`
     }
 
     /**
      * エディットボックス変更時のイベント
      */
-    maxStaminaEdit.onchange = (event) => {
-        calcStamina();
-
-        // cookie更新
-        // グローバル変数にすれば別に再取得いらんのやけど
-        // そのうちクラス化する
-        document.cookie = `${cookieName}=${parseInt(maxStaminaEdit.value)};max-age=${cookieLife}`;
+    calcBtn.onclick = (event) => {
+        calSysOdds();
     }
 
 })();

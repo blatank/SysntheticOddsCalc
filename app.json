@@ -1,8 +1,0 @@
-{
-    "name": "yuyuyuistaminacalc",
-    "description": "[gh-pages]:https://blatank.github.io/YuyuyuiStaminaCalc/index.html",
-    "repository": "https://github.com/blatank/YuyuyuiStaminaCalc.git",
-    "logo": "",
-    "keywords": ["node"],
-    "image": "heroku/nodejs"
-}

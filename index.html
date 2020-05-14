@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ゆゆゆいスタミナ計算</title>
+    <link rel="stylesheet" href="YuyuyuiStaminaCalc.css">
+    <script src="YuyuyuiStaminaCalc.js" async></script>
+</head>
+<body>
+    <h1>ゆゆゆいスタミナ計算</h1>
+    <div class="explain">
+        <ul>
+        <li>最大スタミナを入力ください。</li>
+        <li>入力後、ENTERかフォーカス変えるかで再演算されます。</li>
+        <li>再演算時にcookieに保存します。保存期限は更新時から20日後まで有効。</li>
+        <li>テンプレートエンジン(Pug)使うとgh-pagesでは動かないので、<a href="https://yuyuyuistaminacalc.herokuapp.com/" target="_blank" rel="noopener noreferrer">Heroku</a>に最新を置くように変更しました。</li>
+        </ul>
+    </div>
+    <div>
+        <table>
+<!--
+           <tr>
+                <th>Rank：</th>
+                <td><input type="text" id="rank"></td>
+            </tr>
+-->
+            <tr>
+                <th>最大スタミナ：</th>
+                <td><input type="text" id="maxStamina" value="0"></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div id="calcResult">
+        <p>(ここに結果が表示されます)</p>
+    </div>
+</body>
+</html>

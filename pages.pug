@@ -1,0 +1,23 @@
+doctype html
+html(lang="ja")
+  head
+    meta(charset="UTF-8")
+    title ゆゆゆいスタミナ計算
+    link(rel="stylesheet" href="YuyuyuiStaminaCalc.css")
+    script(src="YuyuyuiStaminaCalc.js" async)
+  body
+    h1 ゆゆゆいスタミナ計算
+    div(class="explain")
+        ul
+          li 最大スタミナを入力ください。
+          li 入力後、ENTERかフォーカス変えるかで再演算されます。
+          li 再演算時にcookieに保存します。保存期限は更新時から20日後まで有効(そのうち有効期限を表示するようにします)。
+    div
+      table
+        tr
+          th 最大スタミナ：
+          td
+            input(type="text" id="maxStamina" value="0")
+    hr
+    div(id="calcResult")
+      p (ここに結果が表示されます)

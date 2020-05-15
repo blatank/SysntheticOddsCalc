@@ -42,7 +42,7 @@
     }
 
     // オッズ無し
-    if (oddsNum == 0) {
+    if (oddsNum === 0) {
       alert("有効なオッズがありません！");
       return;
     }

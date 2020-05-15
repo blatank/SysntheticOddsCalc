@@ -17,5 +17,8 @@
 ### ダウンロードしてindex.htmlを開く
 - 画面右上の方にある「Clone or download▼」から「Download ZIP」を選択し、解凍ください。
 
+### 計算機自体の使い方
+https://blatan.info/?p=14181 を参照
+
 ## 仕様
 - 合成オッズ = 1 / ((1 / 各オッズ)の総和)

@@ -83,5 +83,15 @@
         calSysOdds();
     }
 
+    /**
+     * クリアボタンクリック時のイベント
+     */
+    clearBtn.onclick = (event) => {
+        oddsEdit.value = "";
+        fundEdit.value = "";
+        calcResult.innerHTML = "(ここに結果が表示されます)";
+        calcAlloc.innerHTML = "";
+    }
+
 })();
 
